@@ -41,7 +41,7 @@
 - (void)setCount:(NSInteger)count
 {
     _count = count;
-    self.text = [NSString stringWithFormat:@"%d", count];
+    self.text = [NSString stringWithFormat:@"%ld", count];
 }
 
 - (void)setText:(NSString *)text
