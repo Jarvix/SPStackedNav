@@ -28,6 +28,12 @@
 /// Whether to add 20pt spacing on top to get out under the status bar.
 @property(nonatomic,assign) BOOL skipStatusBar;
 
+/// Whether the tab bar should use tined images.
+@property(nonatomic,assign) BOOL useTintedBarImages;
+
+/// Bakcground color of the tab bar.
+@property(nonatomic,strong) UIColor *tabBarBackgroundColor;
+
 - (BOOL)isBottomAttachmentHidden;
 - (void)setBottomAttachmentHidden:(BOOL)hidden animated:(BOOL)animated;
 @end

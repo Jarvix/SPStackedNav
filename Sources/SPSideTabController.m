@@ -41,6 +41,8 @@
 
     self.tabBar = [[SPSideTabBar alloc] initWithFrame:pen];
     self.tabBar.delegate = self;
+	self.tabBar.backgroundColor = _tabBarBackgroundColor;
+	self.tabBar.useTintedImages = _useTintedBarImages;
     [root addSubview:_tabBar];
 
     pen.origin.x += pen.size.width;
