@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
     they will interfere with navigation, or the other way around.
                    DESC
 
-  s.homepage     = "http://github.com/spotify/SPStackedNav"
+  s.homepage     = "http://github.com/Jarvix/SPStackedNav"
   s.screenshots  = "http://f.cl.ly/items/2H2p0b1H3A2K3T0E040u/mzl.lmmfkkux.480x480-75.jpg"
 
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
 
   s.platform      = :ios, '5.0'
 
-  s.source        = { :git => "https://github.com/spotify/SPStackedNav.git", :tag => "1.0.0" }
+  s.source        = { :git => "https://github.com/Jarvix/SPStackedNav.git", :tag => "1.0.0" }
   s.source_files  = 'Classes', 'Sources/*.{h,m}'
   s.public_header_files = 'include/SPStackedNav/*.h'
   s.preserve_path = "include"
