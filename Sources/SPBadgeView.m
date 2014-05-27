@@ -41,7 +41,7 @@
 - (void)setCount:(NSInteger)count
 {
     _count = count;
-    self.text = [NSString stringWithFormat:@"%ld", count];
+    self.text = [NSString stringWithFormat:@"%ld", (long)count];
 }
 
 - (void)setText:(NSString *)text
@@ -49,7 +49,9 @@
     _text = [text copy];
     // Resize to fit the badge
     CGRect r = self.frame;
-    r.size = [self.text sizeWithFont:self.font];
+
+	NSDictionary *fopts = self.font?@{NSFontAttributeName:self.font}:@{};
+	r.size = [self.text sizeWithAttributes:fopts];
     r.size.width += 16;
     r.size.height += 2;
 
@@ -104,12 +106,17 @@
     CGColorSpaceRelease(colorSpace);
     
     CGRect textRect = self.bounds;
-    CGSize textSize = [self.text sizeWithFont:self.font];
+	NSDictionary *fopts = self.font?@{NSFontAttributeName:self.font}:@{};
+    CGSize textSize = [self.text sizeWithAttributes:fopts];
     textRect.origin.y = textRect.size.height / 2 - textSize.height / 2;
-    [self.text drawInRect:textRect
-                 withFont:self.font
-            lineBreakMode:NSLineBreakByClipping
-                alignment:NSTextAlignmentCenter];
+
+	NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+	paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+	paragraphStyle.alignment = NSTextAlignmentCenter;
+
+	fopts = self.font?@{NSFontAttributeName:self.font,NSParagraphStyleAttributeName:paragraphStyle}:@{NSParagraphStyleAttributeName:paragraphStyle};
+	[self.text drawInRect:textRect
+		   withAttributes:fopts];
 }
 
 @end
