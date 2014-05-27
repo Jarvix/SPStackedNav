@@ -31,7 +31,7 @@
     self.count = 0;
     self.opaque = NO;
     self.font = SPBadgeView.badgeFont;
-    self.textColor = [UIColor blackColor];
+    self.textColor = [UIColor whiteColor];
     self.textTransparentOnHighlightedAndSelected = NO;
     self.userInteractionEnabled = NO;
     
