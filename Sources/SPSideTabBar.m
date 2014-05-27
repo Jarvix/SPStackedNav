@@ -37,14 +37,16 @@
 
 - (void)commonSetup
 {
+	/*
     UIImage *bgI = [UIImage imageNamed:@"bg-tb"];
     _backgroundPattern = [UIColor colorWithPatternImage:bgI];
-    
+
     CGRect r = self.frame;
     if (r.size.width > [bgI size].width) {
         r.size.width = [bgI size].width;
         self.frame = r;
     }
+	 */
 }
 
 - (id)initWithFrame:(CGRect)r
@@ -73,21 +75,42 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     {
-        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:[self bounds]
-                                                   byRoundingCorners:UIRectCornerTopLeft
-                                                         cornerRadii:CGSizeMake(5, 5)];
-        CGContextAddPath(context, [path CGPath]);
-        CGContextClip(context);
-        
-        [_backgroundPattern setFill];
+
+//		CGPathRef path = CGPathCreateWithRect([self bounds], NULL);
+//        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:[self bounds]
+//                                                   byRoundingCorners:UIRectCornerTopLeft
+//                                                         cornerRadii:CGSizeMake(5, 5)];
+//        CGContextAddPath(context, [path CGPath]);
+//		CGPathRelease(path);
+//        CGContextClip(context);
+
+//		[_backgroundPattern setFill];
+
+		[[UIColor colorWithWhite:0.973 alpha:1.000] setFill];
         CGContextFillRect(context, rect);
+
+		CGPoint linePoints[2];
+		linePoints[0] = (CGPoint){CGRectGetMaxX(self.bounds),self.bounds.origin.y};
+		linePoints[1] = (CGPoint){CGRectGetMaxX(self.bounds),CGRectGetMaxY(self.bounds)};
+
+		[[UIColor colorWithWhite:0.561 alpha:1.000] setStroke];
+		CGContextStrokeLineSegments(context, linePoints, 2);
     } CGContextRestoreGState(context);
 }
 
 - (UIImage*)imageForState:(UIControlState)state inItem:(UITabBarItem*)item
 {
     UIImage *image = nil;
-    
+
+	if(state & (UIControlStateSelected) && item.selectedImage)
+		return [item.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	if(state & (UIControlStateSelected|UIControlStateHighlighted) && item.image)
+		return [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	else if(item.image)
+		return [item.image sp_tintedImageWithColor:[UIColor colorWithWhite:0.569 alpha:1.000]];
+
+	// Should not go further
+
     if (item.image) {
         if (state & (UIControlStateSelected))
             return [item.image sp_selectedImageForTabBar];
@@ -192,13 +215,19 @@ static const int kIsAdditionalItem = 1;
 {
     NSArray *items = (button.tag == kIsAdditionalItem)?_additionalItems:_items;
     NSArray *buttons = (button.tag == kIsAdditionalItem)?_additionalItemButtons:_itemButtons;
-    
+
     UITabBarItem *tappedItem = items[[buttons indexOfObject:button]];
     if (!_delegate)
         self.selectedItem = tappedItem;
     else
         [self.delegate tabBar:self didSelectItem:tappedItem];
 }
+
+- (UIButton *)buttonForTabBarItem:(UITabBarItem *)item
+{
+	return _additionalItemButtons[[_additionalItems indexOfObject:item]];
+}
+
 - (void)setSelectedItem:(UITabBarItem*)item
 {
     if (item == _selectedItem) return;

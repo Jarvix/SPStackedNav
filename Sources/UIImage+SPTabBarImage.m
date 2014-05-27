@@ -61,7 +61,7 @@ static UIImage *SPMakeTabBarImage(UIImage *source, SPTabBarImageState state)
     
     
     if (state > SPTabBarImageStateNormal) { // Draw glow if selected
-        CGContextSetShadowWithColor(ctx, (CGSize){0,0}, 10, [UIColor colorWithHue:0.246 saturation:0.622 brightness:0.527 alpha:1.0].CGColor);
+        CGContextSetShadowWithColor(ctx, (CGSize){0,0}, 10, [UIColor colorWithHue:0.817 saturation:0.622 brightness:0.527 alpha:1.0].CGColor);
         [source drawInRect:centeredIcon];
         CGContextSetShadowWithColor(ctx, (CGSize){0,0}, 0, 0);
     }
@@ -129,8 +129,8 @@ static UIImage *SPMakeTabBarImage(UIImage *source, SPTabBarImageState state)
                 pixels[i].reps.v[j] = (v * a) *  0xff; // repremultiply and shift back to char range
             }
         }
-        
-        UIColor *highlightColor = (state > SPTabBarImageStateNormal) ? $hexcolor(0xd6ff59) : [UIColor colorWithWhite:1 alpha:.45];
+
+        UIColor *highlightColor = (state > SPTabBarImageStateNormal) ? $hexcolor(0xE700FF) : [UIColor colorWithWhite:1 alpha:.45];
         CGContextSetBlendMode(maskContext, kCGBlendModeSourceIn);
         CGContextSetFillColorWithColor(maskContext, highlightColor.CGColor);
         CGContextFillRect(maskContext, r);
@@ -161,4 +161,30 @@ static UIImage *SPMakeTabBarImage(UIImage *source, SPTabBarImageState state)
 {
     return SPMakeTabBarImage(self, SPTabBarImageStateSelectedHiglighted);
 }
+
+- (UIImage*)sp_tintedImageWithColor:(UIColor*)color
+{
+	UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+
+    CGContextTranslateCTM(context, 0, self.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+
+    CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);
+
+    // draw alpha-mask
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
+    CGContextDrawImage(context, rect, self.CGImage);
+
+    // draw tint color, preserving alpha values of original image
+    CGContextSetBlendMode(context, kCGBlendModeSourceIn);
+    [color setFill];
+    CGContextFillRect(context, rect);
+
+    UIImage *coloredImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return coloredImage;
+}
+
 @end

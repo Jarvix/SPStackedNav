@@ -18,4 +18,5 @@
 - (UIImage*)sp_imageForTabBar;
 - (UIImage*)sp_selectedImageForTabBar;
 - (UIImage*)sp_selectedAndHighlightedImageForTabBar;
+- (UIImage*)sp_tintedImageWithColor:(UIColor*)color;
 @end

@@ -41,19 +41,19 @@
     return self;
 }
 
-static const float kUnknownFrameSize = 10;
+static const float __attribute__((unused)) kUnknownFrameSize = 10;
 - (void)loadView
 {
     CGRect frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     UIView *root = [[UIView alloc] initWithFrame:frame];
     root.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    root.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundTexture.png"]];
-        
+    root.backgroundColor = [UIColor whiteColor];//[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundTexture.png"]];
+
     _scroll = [[SPStackedNavigationScrollView alloc] initWithFrame:frame];
     _scroll.delegate = self;
     _scroll.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     [root addSubview:_scroll];
-    
+
     self.view = root;
     
     for (UIViewController *viewController in [self childViewControllers])
@@ -152,8 +152,9 @@ static const float kUnknownFrameSize = 10;
 #pragma mark Convenience methods to the above two methods.
 - (void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated
 {
-    id commonVC = nil; int startI = NSNotFound;
-    for(int i = 0, c = MIN([self.viewControllers count], [viewControllers count]); i < c; i++)
+    id commonVC = nil;
+	unsigned long startI = NSNotFound;
+    for(unsigned long i = 0, c = MIN([self.viewControllers count], [viewControllers count]); i < c; i++)
     {
         if ([viewControllers[i] isEqual:(self.viewControllers)[i]])
         {

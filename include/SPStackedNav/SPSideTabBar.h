@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
 @protocol SPSideTabBarDelegate;
 
 @interface SPSideTabBar : UIView
@@ -23,6 +24,7 @@
 @property(nonatomic,copy)   NSArray             *additionalItems; // shown starting from the bottom, not associated with a view controller
 - (void)select:(BOOL)selected additionalItem:(UITabBarItem*)item;
 - (CGRect)rectForItem:(UITabBarItem*)item;
+- (UIButton *)buttonForTabBarItem:(UITabBarItem *)item;
 @end
 
 

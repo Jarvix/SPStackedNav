@@ -31,24 +31,25 @@
 {
     CGRect afRect = [[UIScreen mainScreen] applicationFrame];
     CGRect pen = afRect;
+
     UIView *root = [[UIView alloc] initWithFrame:pen];
     self.view = root;
-    
     root.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    
+
     pen.origin = (CGPoint){0,0};
     pen.size.width = 80;
+
     self.tabBar = [[SPSideTabBar alloc] initWithFrame:pen];
     self.tabBar.delegate = self;
     [root addSubview:_tabBar];
-    
-    
+
     pen.origin.x += pen.size.width;
     pen.size.width = afRect.size.width-pen.size.width;
     pen.size.height -= BOTTOM_BAR_HEIGHT;
+
     _mainContainer = [[UIView alloc] initWithFrame:pen];
     [root addSubview:_mainContainer];
-    
+
     pen.origin.y = CGRectGetMaxY(pen);
     pen.size.height = BOTTOM_BAR_HEIGHT;
     _bottomContainer = [[UIView alloc] initWithFrame:pen];
@@ -59,7 +60,7 @@
 
     root.backgroundColor = [UIColor blackColor];
     _mainContainer.backgroundColor = [UIColor blackColor];
-    _bottomContainer.backgroundColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.7 alpha:1.0];
+    _bottomContainer.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1.0];
     
     if (_selectedViewController) {
         UIViewController *sel = _selectedViewController;
@@ -101,6 +102,11 @@
     self.tabBar.delegate = nil;
     self.tabBar = nil;
     [super viewDidUnload];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+	return UIStatusBarStyleLightContent;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -276,15 +282,17 @@
     [super viewDidLayoutSubviews];
     
     CGRect bounds = self.view.bounds;
-    
-    _tabBar.frame = CGRectMake(0, 0, _tabBar.frame.size.width, bounds.size.height);
-    
+	CGFloat statusBarSkipping = 20; // or 0
+
+	_tabBar.frame = CGRectMake(0, statusBarSkipping, _tabBar.frame.size.width,
+							   bounds.size.height - statusBarSkipping);
+
     if (_bottomAttachmentHidden)
     {
         _mainContainer.frame = CGRectMake(CGRectGetMaxX(_tabBar.frame),
-                                          0,
+										  statusBarSkipping,
                                           bounds.size.width - CGRectGetMaxX(_tabBar.frame),
-                                          bounds.size.height);
+                                          bounds.size.height - statusBarSkipping);
         _bottomContainer.frame = CGRectMake(CGRectGetMaxX(_tabBar.frame),
                                             CGRectGetMaxY(bounds) + 1,
                                             bounds.size.width - CGRectGetMaxX(_tabBar.frame),
@@ -293,9 +301,9 @@
     else
     {
         _mainContainer.frame = CGRectMake(CGRectGetMaxX(_tabBar.frame),
-                                          0,
+                                          statusBarSkipping,
                                           bounds.size.width - CGRectGetMaxX(_tabBar.frame),
-                                          bounds.size.height - BOTTOM_BAR_HEIGHT);
+                                          bounds.size.height - BOTTOM_BAR_HEIGHT - statusBarSkipping);
         _bottomContainer.frame = CGRectMake(CGRectGetMaxX(_tabBar.frame),
                                             CGRectGetMaxY(_mainContainer.frame),
                                             bounds.size.width - CGRectGetMaxX(_tabBar.frame),

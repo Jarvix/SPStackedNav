@@ -19,14 +19,20 @@
     if (!(self = [super initWithFrame:frame])) return nil;
     
     UILabel *label = [self titleLabel];
-    label.font = [UIFont boldSystemFontOfSize:11];
+    label.font = [UIFont systemFontOfSize:11];
     label.shadowOffset = CGSizeMake(0, -1);
     
-    [self setTitleShadowColor:[UIColor colorWithWhite:0.0 alpha:0.7] forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor colorWithWhite:0.663 alpha:1.000] forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor colorWithWhite:0.925 alpha:1.000] forState:UIControlStateSelected];
-    
+    [self setTitleColor:[UIColor colorWithWhite:0.569 alpha:1.000] forState:UIControlStateNormal];
+    [self setTitleColor:self.tintColor forState:UIControlStateSelected];
+    [self setTitleColor:self.tintColor forState:UIControlStateSelected|UIControlStateHighlighted];
+
     return self;
+}
+
+- (void)tintColorDidChange
+{
+    [self setTitleColor:self.tintColor forState:UIControlStateSelected];
+    [self setTitleColor:self.tintColor forState:UIControlStateSelected|UIControlStateHighlighted];
 }
 
 - (void)layoutSubviews {
@@ -41,7 +47,7 @@
     CGRect imageFrame = imageView.frame;
     CGRect labelFrame = label.frame;
     
-    imageFrame.origin.y = 4;
+    imageFrame.origin.y = 11;//4
     labelFrame.origin.y = 46;
     
     imageFrame.origin.x = roundf((self.bounds.size.width - imageFrame.size.width) / 2);
