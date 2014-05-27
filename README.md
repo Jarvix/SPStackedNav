@@ -4,6 +4,27 @@ Joachim Bengtsson <nevyn@spotify.com>
 
 <img src="http://f.cl.ly/items/2H2p0b1H3A2K3T0E040u/mzl.lmmfkkux.480x480-75.jpg" style="float:right; margin-left:1em; border: 1px solid gray" />
 
+Changes with the original from Spotify
+--------------------------------------
+
+* Fixes for all warnings.
+* Tab item text is using a system font size of 11, instead of a bold system font size 11.
+* Tab item title color is using tintColor for both states, instead of some grayish (masking).
+* Changed spacing between tab image and text to fit better with imageset.
+* Add backgroundColor property to SPStackedNavigationController, overriding the background image of the controller.
+* Add sp_tintedImageWithColor: to the UIImage category.
+* Add backgroundColor property to SPSideTabBar, overriding the background pattern.
+* Added roundCorners property to SPSideTabBar, to turn on and off the corner radius applied to the tab bar. (Spotify has turned it off now too).
+* Add useTintedImages property to change generation of tab images from using Spotify glow masks to using pure tints.
+
+Currently, the code still contains Spotify (or now, Aura) specific code. Mostly colors. I might filter these out,
+but it is not always very simple to do, especially with the UIImage category.
+
+Spotify seems to not update the code in the repository:
+* The app does not use rounded corners anymore
+* Nor does it have a background image in the nav controller.
+* And it works fine with the status bar of iOS7 (the code did not without modification.)
+
 SPStackedNavigationController
 -----------------------------
 

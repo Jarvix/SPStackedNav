@@ -282,7 +282,7 @@
     [super viewDidLayoutSubviews];
     
     CGRect bounds = self.view.bounds;
-	CGFloat statusBarSkipping = 20; // or 0
+	CGFloat statusBarSkipping = _skipStatusBar?20.0:0.0;
 
 	_tabBar.frame = CGRectMake(0, statusBarSkipping, _tabBar.frame.size.width,
 							   bounds.size.height - statusBarSkipping);

@@ -47,7 +47,7 @@
     CGRect imageFrame = imageView.frame;
     CGRect labelFrame = label.frame;
     
-    imageFrame.origin.y = 11;//4
+    imageFrame.origin.y = 11;
     labelFrame.origin.y = 46;
     
     imageFrame.origin.x = roundf((self.bounds.size.width - imageFrame.size.width) / 2);

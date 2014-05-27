@@ -22,6 +22,20 @@
 @property(nonatomic,copy)   NSArray             *items;        // get/set visible UITabBarItems. default is nil. changes not animated. shown in order
 @property(nonatomic,retain) UITabBarItem        *selectedItem;
 @property(nonatomic,copy)   NSArray             *additionalItems; // shown starting from the bottom, not associated with a view controller
+
+/// Background color of the tab bar. Overrides using a pattern image.
+@property(nonatomic,strong) UIColor *backgroundColor;
+
+/// Whether to round the corners of the tab bar. Spotify has it turned of since iOS7.
+@property(nonatomic,assign) BOOL roundCorners;
+
+/**
+ * Use tintend images instead of a glow.
+ * Spotify uses mask images to create a glow. Turning this on,
+ * causes a more UITabBar-like icons.
+ */
+@property(nonatomic,assign) BOOL useTintedImages;
+
 - (void)select:(BOOL)selected additionalItem:(UITabBarItem*)item;
 - (CGRect)rectForItem:(UITabBarItem*)item;
 - (UIButton *)buttonForTabBarItem:(UITabBarItem *)item;

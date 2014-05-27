@@ -25,6 +25,9 @@
 @property(nonatomic,assign) id<SPSideTabBarDelegate> tabBarDelegate; // is forwarded additionalItems
 @property(nonatomic,retain) NSArray *additionalItems;
 
+/// Whether to add 20pt spacing on top to get out under the status bar.
+@property(nonatomic,assign) BOOL skipStatusBar;
+
 - (BOOL)isBottomAttachmentHidden;
 - (void)setBottomAttachmentHidden:(BOOL)hidden animated:(BOOL)animated;
 @end

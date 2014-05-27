@@ -41,13 +41,12 @@
     return self;
 }
 
-static const float __attribute__((unused)) kUnknownFrameSize = 10;
 - (void)loadView
 {
     CGRect frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     UIView *root = [[UIView alloc] initWithFrame:frame];
     root.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    root.backgroundColor = [UIColor whiteColor];//[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundTexture.png"]];
+    root.backgroundColor = (_backgroundColor != nil)?_backgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundTexture.png"]];
 
     _scroll = [[SPStackedNavigationScrollView alloc] initWithFrame:frame];
     _scroll.delegate = self;

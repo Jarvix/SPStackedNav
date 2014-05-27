@@ -37,7 +37,6 @@
 
 - (void)commonSetup
 {
-	/*
     UIImage *bgI = [UIImage imageNamed:@"bg-tb"];
     _backgroundPattern = [UIColor colorWithPatternImage:bgI];
 
@@ -46,7 +45,6 @@
         r.size.width = [bgI size].width;
         self.frame = r;
     }
-	 */
 }
 
 - (id)initWithFrame:(CGRect)r
@@ -75,18 +73,19 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     {
+		if(_roundCorners) {
+			UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:[self bounds]
+													   byRoundingCorners:UIRectCornerTopLeft
+															 cornerRadii:CGSizeMake(5, 5)];
+			CGContextAddPath(context, [path CGPath]);
+			CGContextClip(context);
+		}
 
-//		CGPathRef path = CGPathCreateWithRect([self bounds], NULL);
-//        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:[self bounds]
-//                                                   byRoundingCorners:UIRectCornerTopLeft
-//                                                         cornerRadii:CGSizeMake(5, 5)];
-//        CGContextAddPath(context, [path CGPath]);
-//		CGPathRelease(path);
-//        CGContextClip(context);
+		if(_backgroundColor != nil)
+			[_backgroundColor setFill];
+		else
+			[_backgroundPattern setFill];
 
-//		[_backgroundPattern setFill];
-
-		[[UIColor colorWithWhite:0.973 alpha:1.000] setFill];
         CGContextFillRect(context, rect);
 
 		CGPoint linePoints[2];
@@ -102,12 +101,14 @@
 {
     UIImage *image = nil;
 
-	if(state & (UIControlStateSelected) && item.selectedImage)
-		return [item.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-	if(state & (UIControlStateSelected|UIControlStateHighlighted) && item.image)
-		return [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-	else if(item.image)
-		return [item.image sp_tintedImageWithColor:[UIColor colorWithWhite:0.569 alpha:1.000]];
+	if(_useTintedImages) {
+		if(state & (UIControlStateSelected) && item.selectedImage)
+			return [item.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		if(state & (UIControlStateSelected|UIControlStateHighlighted) && item.image)
+			return [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		else if(item.image)
+			return [item.image sp_tintedImageWithColor:[UIColor colorWithWhite:0.569 alpha:1.000]];
+	}
 
 	// Should not go further
 

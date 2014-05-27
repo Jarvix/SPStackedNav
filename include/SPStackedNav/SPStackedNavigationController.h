@@ -31,6 +31,10 @@ typedef enum
     except you can push VCs in the middle of it.
 */
 @interface SPStackedNavigationController : UIViewController
+
+/// Background color, behind the views. If set to nil, uses a background image.
+@property (nonatomic,strong) UIColor *backgroundColor;
+
 - (id)initWithRootViewController:(UIViewController *)rootViewController;
 
 // activate specifies whether the pushed view controller should become the active view controller or not
