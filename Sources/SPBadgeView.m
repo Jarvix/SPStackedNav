@@ -114,7 +114,9 @@
 	paragraphStyle.lineBreakMode = NSLineBreakByClipping;
 	paragraphStyle.alignment = NSTextAlignmentCenter;
 
-	fopts = self.font?@{NSFontAttributeName:self.font,NSParagraphStyleAttributeName:paragraphStyle}:@{NSParagraphStyleAttributeName:paragraphStyle};
+	fopts = @{NSFontAttributeName:self.font,
+			  NSParagraphStyleAttributeName:paragraphStyle,
+			  NSForegroundColorAttributeName:textColor};
 	[self.text drawInRect:textRect
 		   withAttributes:fopts];
 }
